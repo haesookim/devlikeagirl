@@ -15,14 +15,14 @@ d.get("http://www.melon.com/chart/search/index.htm")
 d.find_element_by_xpath('//*[@id="d_chart_search"]/div/h4[1]/a').click()
 
 
-for i in range(4, 5):
+for i in range(1, 5):
     # age
     age_xpath = '//*[@id="d_chart_search"]/div/div/div[1]/div[1]/ul/li[' + str(i) + ']/span/label'
     age = d.find_element_by_xpath(age_xpath)
     age.click()
 
     # year
-    for i in range(5, 11):
+    for i in range(1, 11):
         result = list()
 
         try:
@@ -136,7 +136,7 @@ for i in range(4, 5):
                     print("가사:", lyric)
                     print("*_*_*_*_*_*_*_*_*_*_*__*_*_*")
 
-                with open('result_{}.csv'.format{year.text}, 'w') as csvfile:
+                with open('./result_{}.csv'.format(year.text), 'w') as csvfile:
                     fieldnames = ["차트 연도", "순위", "곡 id", "제목", "아티스트", "앨범", "발매날짜", "장르", "작사", "가사"]
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
