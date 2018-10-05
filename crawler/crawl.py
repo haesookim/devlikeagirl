@@ -16,7 +16,7 @@ d.find_element_by_xpath('//*[@id="d_chart_search"]/div/h4[1]/a').click()
 
 
 for i in range(1, 5):
-    # age
+    # age 10년 단위
     age_xpath = '//*[@id="d_chart_search"]/div/div/div[1]/div[1]/ul/li[' + str(i) + ']/span/label'
     age = d.find_element_by_xpath(age_xpath)
     age.click()
@@ -93,15 +93,14 @@ for i in range(1, 5):
 
                     title = re.sub('^\s*|\s+$','', title)
                     
+                    # 가수
                     singers = re.sub('<[^>]*>|\s|\[|\]', '', str(soup.find('div', class_ = "artist")))
 
                     album = soup.select('#downloadfrm > div > div > div.entry > div.meta > dl > dd')[0].text
                     date = soup.select('#downloadfrm > div > div > div.entry > div.meta > dl > dd')[1].text
                     genre = soup.select('#downloadfrm > div > div > div.entry > div.meta > dl > dd')[2].text 
                     
-                    list_ = singers.split(',')
-                    count = len(list_)
-                    
+                    # 작사가
                     creator = re.sub('<[^>]*>|\s|\[|\]', '', str(soup.find_all("div", attrs={"class": "entry"})))
                     creator = re.sub('^\s*|\s+$', '', creator)
                     clist = creator.split(',')
@@ -110,6 +109,8 @@ for i in range(1, 5):
                         if '작사' in x:
                             creator.append(x[:-2])
                     creator = ','.join(creator)        
+                    
+                    # 가사
                     lyric = re.sub('<[^>]*>|\s|\[|\]', ' ', str(soup.find_all(attrs={"class": "lyric"})[0]))
                     lyric = re.sub('^\s*|\s+$', '', lyric)
                     
