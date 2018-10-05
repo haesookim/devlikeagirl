@@ -5,6 +5,7 @@ import requests
 import json
 import re
 from selenium.common.exceptions import NoSuchElementException
+import csv
 
 header = {'User-Agent': ''}
 d = webdriver.Chrome('./chromedriver')
@@ -14,14 +15,14 @@ d.get("http://www.melon.com/chart/search/index.htm")
 d.find_element_by_xpath('//*[@id="d_chart_search"]/div/h4[1]/a').click()
 
 
-for i in range(1, 5):
+for i in range(4, 5):
     # age
     age_xpath = '//*[@id="d_chart_search"]/div/div/div[1]/div[1]/ul/li[' + str(i) + ']/span/label'
     age = d.find_element_by_xpath(age_xpath)
     age.click()
 
     # year
-    for i in range(1, 11):
+    for i in range(5, 11):
         result = list()
 
         try:
@@ -32,7 +33,7 @@ for i in range(1, 5):
 
         except:
             print("year_xpath not found")
-            pass
+            continue
             
         # month
         for i in range(1,13):
@@ -44,7 +45,7 @@ for i in range(1, 5):
 
             except:
                 print("month_xpath not found")
-                pass
+                continue
         
             # week
             for i in range(1,6):
@@ -56,13 +57,16 @@ for i in range(1, 5):
 
                 except:
                     print("week_xpath not found")
-                    pass
+                    continue
                 
-                
+
                 # genre selection
-                classCd = d.find_element_by_xpath('//*[@id="d_chart_search"]/div/div/div[5]/div[1]/ul/li[2]/span/label')
-                if '가요' not in classCd.text and '국내종합' not in classCd.text:
+                try:
+                    classCd = d.find_element_by_xpath('//*[@id="d_chart_search"]/div/div/div[5]/div[1]/ul/li[2]/span/label')
+                except:
                     classCd = d.find_element_by_xpath('//*[@id="d_chart_search"]/div/div/div[5]/div[1]/ul/li/span/label')
+                
+                
                 classCd.click()
                 print(classCd.text)
 
@@ -108,7 +112,7 @@ for i in range(1, 5):
                     creator = ','.join(creator)        
                     lyric = re.sub('<[^>]*>|\s|\[|\]', ' ', str(soup.find_all(attrs={"class": "lyric"})[0]))
                     lyric = re.sub('^\s*|\s+$', '', lyric)
-
+                    
                     result.append({
                         'year': re.sub('[^0-9]', '', year.text),
                         'rank': rank.text,
@@ -131,6 +135,11 @@ for i in range(1, 5):
                     print("작사:", creator)
                     print("가사:", lyric)
                     print("*_*_*_*_*_*_*_*_*_*_*__*_*_*")
-                with open('./data/melon_chart' + re.sub('[^0-9]', '', age.text) + 's.json', 'w', encoding='utf-8') as f:
-                    j = json.dumps(result)
-                    f.write(j)
+
+                with open('result_{}.csv'.format{year.text}, 'w') as csvfile:
+                    fieldnames = ["차트 연도", "순위", "곡 id", "제목", "아티스트", "앨범", "발매날짜", "장르", "작사", "가사"]
+                    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+                    writer.writeheader()
+                    for i in len(result):
+                        writer.writerow(result[i])
