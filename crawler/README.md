@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ** Notice
 beautiful soup과 selenium을 모두 사용했습니다.
 아래 chrome Driver를 설치해야 해요.
@@ -15,3 +16,5 @@ http://baekse.me/Melon-Chart-Crawling/
 https://beomi.github.io/2017/02/27/HowToMakeWebCrawler-With-Selenium/
 
 Notice
+=======
+>>>>>>> parent of 73f51b3... breif
