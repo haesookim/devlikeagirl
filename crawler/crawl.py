@@ -155,10 +155,10 @@ for i in range(1, 5):
                     except:
                         print("No next page")
 
-        with open('./result_{}.csv'.format(year.text), 'w') as csvfile:
-            fieldnames = ["time", "rank", "song_id", "title", "singers", "album", "date", "genre", "creator", "lyric"]
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                with open('./result_{}_{}.csv'.format(year.text, week.text), 'w') as csvfile:
+                    fieldnames = ["time", "rank", "song_id", "title", "singers", "album", "date", "genre", "creator", "lyric"]
+                    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
-            writer.writeheader()
-            for i in range(len(result)):
-                writer.writerow(result[0])
+                    writer.writeheader()
+                    for i in range(len(result)):
+                        writer.writerow(result[i])
