@@ -23,7 +23,7 @@ for i in range(1, 5):
 
     # year
     for i in range(1, 11):
-        result = list()
+
 
         try:
             year_xpath = '//*[@id="d_chart_search"]/div/div/div[2]/div[1]/ul/li[' + str(i) + ']/span/label'
@@ -49,6 +49,8 @@ for i in range(1, 5):
         
             # week
             for i in range(1,6):
+                # weekly save
+                result = list()
                 try:
                     week_xpath = '//*[@id="d_chart_search"]/div/div/div[4]/div[1]/ul/li[' + str(i) + ']/span/label'
                     week = d.find_element_by_xpath(week_xpath)
